@@ -4,15 +4,34 @@ import sys
 
 """Dělení adresních bodů"""
 
-input_file= "body_adresy.geojson"#sys.argv[1]
-out_file = "body_adresy_vystup.geojson"#sys.argv[2]
 
-def open_json(input_file):
+input_file= sys.argv[1] #"body_adresy.geojson"
+out_file = sys.argv[2] #"body_adresy_vystup.geojson"
+
+if len(sys.argv)!=3:
+    print ("Chybný počet vstupních parametrů")
+    exit(1)
+try:
+    if sys.argv [2][-7:]=="geojson":
+        out_file = sys.argv[2]
+except ValueError:
+    print ("Výstupní soubor není geojson")
+    exit (4)
+
+
+def open_json(input_file_name):
     """otevre vstupni geojson
         vstup: input_file: soubor json
         výstup: načtnená data vstupního souboru"""
-    with open(input_file, encoding='utf-8') as f:
-        gj = geojson.load(f)
+    try:
+        with open(input_file_name, encoding='utf-8') as f:
+            gj = geojson.load(f)
+    except FileNotFoundError:
+        print ("soubor nenalezen")
+        exit (1)
+    except UnicodeError:
+        print ("Chybný vstupní soubor")
+        exit (2)
 
     #adress = gj['features'][0]
     #print(adress)
@@ -121,13 +140,21 @@ def create_output(gj,points):
     """spáruje list a vstupní json a vytvoří výstupní json
             vstup: gj: vstupní json
                     points: list rozdelených bodů"""
-    for issue in gj['features']:
+    for feature in gj['features']:
         for point in points:
-            if issue['properties']['@id'] == point[0]:
-                issue['properties']['cluster_id'] = point[3]
+            if feature['properties']['@id'] == point[0]:
+                feature['properties']['cluster_id'] = point[3]
                 break
-    with open(out_file, 'w') as out:
-        json.dump(gj, out)
+    try:
+        with open(out_file, 'w') as out:
+            json.dump(gj, out)
+    except FileNotFoundError:
+        print("chyba zápisu, soubor nenalezen")
+        exit (5)
+    except PermissionError:
+        print ("není povolený zápis do souboru")
+        exit (6)
+
 
 gj=open_json(input_file)
 points=create_list(gj)
