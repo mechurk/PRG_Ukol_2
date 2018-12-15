@@ -2,6 +2,7 @@ import geojson
 import json
 import sys
 
+
 """Dělení adresních bodů"""
 
 
@@ -138,8 +139,9 @@ def bottomRight(box):
 
 def create_output(gj,points):
     """spáruje list a vstupní json a vytvoří výstupní json
-            vstup: gj: vstupní json
+            vstup:  gj: vstupní json
                     points: list rozdelených bodů"""
+
     for feature in gj['features']:
         for point in points:
             if feature['properties']['@id'] == point[0]:
