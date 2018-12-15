@@ -21,7 +21,7 @@ except ValueError:
 
 def open_json(input_file_name):
     """otevre vstupni geojson
-        vstup: input_file: soubor json
+        vstup: input_file: soubor geojson
         výstup: načtnená data vstupního souboru"""
     try:
         with open(input_file_name, encoding='utf-8') as f:
