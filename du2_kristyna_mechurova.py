@@ -1,6 +1,7 @@
 import geojson
 import json
 import sys
+from operator import itemgetter
 
 
 """Dělení adresních bodů"""
@@ -141,7 +142,13 @@ def create_output(gj,points):
     """spáruje list a vstupní json a vytvoří výstupní json
             vstup:  gj: vstupní json
                     points: list rozdelených bodů"""
-
+    """
+    sort_points = sorted(points, key=itemgetter(0))
+    print(sort_points)
+    sort_gj=sorted(gj,key=itemgetter(0))
+    print (sort_gj)
+    pokus o razeni, ktery se nepovedl 
+    """
     for feature in gj['features']:
         for point in points:
             if feature['properties']['@id'] == point[0]:

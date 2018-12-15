@@ -1,8 +1,9 @@
 import sys
 import du2_kristyna_mechurova
+import subprocess
 from du2_kristyna_mechurova import open_json
-sys.argv[1] ="body_adresy.geojson"
-sys.argv[2]="body_adresy_vystup.geojson"
+#sys.argv[1] ="body_adresy.geojson"
+#sys.argv[2]="body_adresy_vystup.geojson"
 
 #def test_argv():
 #    assert du2_kristyna_mechurova("body_adresy.geojson" "body_adresy_vystup.geojson")==True
